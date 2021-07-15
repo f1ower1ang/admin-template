@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="user-page">
     用户管理
   </div>
 </template>

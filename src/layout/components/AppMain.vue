@@ -1,8 +1,10 @@
 <template>
-  <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
-      <router-view :key="key" />
-    </transition>
+  <section class="app-container">
+    <div class="app-view">
+      <transition name="fade-transform" mode="out-in">
+        <router-view :key="key" />
+      </transition>
+    </div>
   </section>
 </template>
 
@@ -17,16 +19,23 @@ export default {
 }
 </script>
 
-<style scoped>
-.app-main {
+<style scoped lang="scss">
+.app-container {
   /*50 = navbar  */
-  min-height: calc(100vh - 84px);
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 10px 10px;
   width: 100%;
   position: relative;
   overflow: hidden;
+  .app-view {
+    width: 100%;
+    height: 100%;
+    overflow: hidden auto;
+  }
 }
-.fixed-header+.app-main {
-  padding-top: 84px;
+.fixed-header+.app-container {
+  padding-top: 100px;
 }
 </style>
 

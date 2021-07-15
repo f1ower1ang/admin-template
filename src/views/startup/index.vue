@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="startup-page">
     创业管理
   </div>
 </template>

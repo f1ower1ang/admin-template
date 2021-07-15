@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="policy-page">
     政策法规
   </div>
 </template>

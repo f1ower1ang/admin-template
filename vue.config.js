@@ -29,6 +29,15 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'scss',
+      patterns: [
+        path.resolve(__dirname, 'src/styles/variables.scss'),
+        path.resolve(__dirname, 'src/styles/mixin.scss')
+      ]
+    }
+  },
   devServer: {
     port: port,
     open: true,

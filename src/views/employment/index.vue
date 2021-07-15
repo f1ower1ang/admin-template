@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="employment-page">
     就业管理
   </div>
 </template>

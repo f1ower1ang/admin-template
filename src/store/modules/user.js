@@ -1,4 +1,3 @@
-import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -25,7 +24,6 @@ const users = {
     name: 'Normal Editor'
   }
 }
-
 
 const getDefaultState = () => {
   return {
@@ -56,6 +54,7 @@ const actions = {
   // user login
   login({ commit }, userInfo) {
     const { username, password } = userInfo
+    console.log(username, password)
     return new Promise((resolve, reject) => {
       commit('SET_TOKEN', tokens[username.trim()].token)
       setToken(tokens[username.trim()].token)

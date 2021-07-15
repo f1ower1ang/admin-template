@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="inquire-page">
     答疑管理界面
   </div>
 </template>

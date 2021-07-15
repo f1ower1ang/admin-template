@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="skill-page">
     技能提升
   </div>
 </template>

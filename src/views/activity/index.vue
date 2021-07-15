@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="activity-page">
     线下活动管理
   </div>
 </template>
