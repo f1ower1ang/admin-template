@@ -4,7 +4,7 @@
       <div class="title">创业管理</div>
       <el-form :inline="true" :model="formData">
         <el-form-item label="标题">
-          <el-input size="small" v-model="formData.title" placeholder="活动标题"></el-input>
+          <el-input v-model="formData.title" size="small" placeholder="活动标题" />
         </el-form-item>
         <el-form-item label="发布日期">
           <el-date-picker
@@ -16,11 +16,11 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             size="small"
-            :picker-options="pickerOptions">
-          </el-date-picker>
+            :picker-options="pickerOptions"
+          />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="search" size="small">搜索</el-button>
+          <el-button type="primary" size="small" @click="search">搜索</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -52,9 +52,9 @@
           :data="tableData"
           border
           size="small"
-          @selection-change="handleSelectionChange"
           :header-cell-style="{backgroundColor: '#ebeef5', fontWeight: 500, padding: '6px 0'}"
           :header-row-style="{backgroundColor: '#ebeef5', color: '#000', fontSize: '14px'}"
+          @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column v-for="(label, index) in header" :key="index" :label="label" :prop="key[index]" />
@@ -98,90 +98,87 @@ export default {
         shortcuts: [{
           text: '最近一周',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
           }
         }, {
           text: '最近一个月',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
           }
         }, {
           text: '最近三个月',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
           }
         }]
       }
     }
   },
   created() {
-    this.getTableData()
+    this.getArrayData()
   },
   methods: {
     getItems(params) {
       // 后端接口请求
-      return Promise.resolve({
-        count: 10,
-        data: [
-          {
-            id: '活动id',
-            title: '创业活动标题',
-            date: '发布日期',
-            time: '活动有效期'
-          },
-          {
-            id: '活动id',
-            title: '创业活动标题',
-            date: '发布日期',
-            time: '活动有效期'
-          },
-          {
-            id: '活动id',
-            title: '创业活动标题',
-            date: '发布日期',
-            time: '活动有效期'
-          },
-          {
-            id: '活动id',
-            title: '创业活动标题',
-            date: '发布日期',
-            time: '活动有效期'
-          },
-          {
-            id: '活动id',
-            title: '创业活动标题',
-            date: '发布日期',
-            time: '活动有效期'
-          },
-          {
-            id: '活动id',
-            title: '创业活动标题',
-            date: '发布日期',
-            time: '活动有效期'
-          },
-          {
-            id: '活动id',
-            title: '创业活动标题',
-            date: '发布日期',
-            time: '活动有效期'
-          },
-          {
-            id: '活动id',
-            title: '创业活动标题',
-            date: '发布日期',
-            time: '活动有效期'
-          }
-        ]
-      })
+      return Promise.resolve([
+        {
+          id: '活动id',
+          title: '创业活动标题',
+          date: '发布日期',
+          time: '活动有效期'
+        },
+        {
+          id: '活动id',
+          title: '创业活动标题',
+          date: '发布日期',
+          time: '活动有效期'
+        },
+        {
+          id: '活动id',
+          title: '创业活动标题',
+          date: '发布日期',
+          time: '活动有效期'
+        },
+        {
+          id: '活动id',
+          title: '创业活动标题',
+          date: '发布日期',
+          time: '活动有效期'
+        },
+        {
+          id: '活动id',
+          title: '创业活动标题',
+          date: '发布日期',
+          time: '活动有效期'
+        },
+        {
+          id: '活动id',
+          title: '创业活动标题',
+          date: '发布日期',
+          time: '活动有效期'
+        },
+        {
+          id: '活动id',
+          title: '创业活动标题',
+          date: '发布日期',
+          time: '活动有效期'
+        },
+        {
+          id: '活动id',
+          title: '创业活动标题',
+          date: '发布日期',
+          time: '活动有效期'
+        }
+      ])
     }
   }
 }

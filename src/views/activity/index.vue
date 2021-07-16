@@ -4,16 +4,16 @@
       <div class="title">线下活动管理</div>
       <el-form :inline="true" :model="formData">
         <el-form-item label="标题">
-          <el-input size="small" v-model="formData.title" placeholder="活动标题"></el-input>
+          <el-input v-model="formData.title" size="small" placeholder="活动标题" />
         </el-form-item>
         <el-form-item label="活动介绍">
-          <el-input size="small" v-model="formData.intro" placeholder="活动详情"></el-input>
+          <el-input v-model="formData.intro" size="small" placeholder="活动详情" />
         </el-form-item>
         <el-form-item label="位置信息">
-          <el-input size="small" v-model="formData.locate" placeholder="活动位置信息"></el-input>
+          <el-input v-model="formData.locate" size="small" placeholder="活动位置信息" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="search" size="small">搜索</el-button>
+          <el-button type="primary" size="small" @click="search">搜索</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -32,7 +32,7 @@
           <el-button slot="reference" size="small" type="danger">删除</el-button>
         </el-popconfirm>
         <el-button size="small" type="primary" @click="showDialog(null)">添加</el-button>
-    </div>
+      </div>
       <pagination
         :size="limit"
         :total="total"
@@ -45,9 +45,9 @@
           :data="tableData"
           border
           size="small"
-          @selection-change="handleSelectionChange"
           :header-cell-style="{backgroundColor: '#ebeef5', fontWeight: 500, padding: '6px 0'}"
           :header-row-style="{backgroundColor: '#ebeef5', color: '#000', fontSize: '14px'}"
+          @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column v-for="(label, index) in header" :key="index" :label="label" :prop="key[index]" />
@@ -92,88 +92,85 @@ export default {
     }
   },
   created() {
-    this.getTableData()
+    this.getArrayData()
   },
   methods: {
     getItems(params) {
       // 后端接口请求
-      return Promise.resolve({
-        count: 10,
-        data: [
-          {
-            id: '活动id',
-            title: '线下活动标题',
-            date: '活动日期',
-            introduce: '活动介绍',
-            location: '活动位置',
-            imgUrl: '活动图片'
-          },
-          {
-            id: '活动id',
-            title: '线下活动标题',
-            date: '活动日期',
-            introduce: '活动介绍',
-            location: '活动位置',
-            imgUrl: '活动图片'
-          },
-          {
-            id: '活动id',
-            title: '线下活动标题',
-            date: '活动日期',
-            introduce: '活动介绍',
-            location: '活动位置',
-            imgUrl: '活动图片'
-          },
-          {
-            id: '活动id',
-            title: '线下活动标题',
-            date: '活动日期',
-            introduce: '活动介绍',
-            location: '活动位置',
-            imgUrl: '活动图片'
-          },
-          {
-            id: '活动id',
-            title: '线下活动标题',
-            date: '活动日期',
-            introduce: '活动介绍',
-            location: '活动位置',
-            imgUrl: '活动图片'
-          },
-          {
-            id: '活动id',
-            title: '线下活动标题',
-            date: '活动日期',
-            introduce: '活动介绍',
-            location: '活动位置',
-            imgUrl: '活动图片'
-          },
-          {
-            id: '活动id',
-            title: '线下活动标题',
-            date: '活动日期',
-            introduce: '活动介绍',
-            location: '活动位置',
-            imgUrl: '活动图片'
-          },
-          {
-            id: '活动id',
-            title: '线下活动标题',
-            date: '活动日期',
-            introduce: '活动介绍',
-            location: '活动位置',
-            imgUrl: '活动图片'
-          },
-          {
-            id: '活动id',
-            title: '线下活动标题',
-            date: '活动日期',
-            introduce: '活动介绍',
-            location: '活动位置',
-            imgUrl: '活动图片'
-          }
-        ]
-      })
+      return Promise.resolve([
+        {
+          id: '活动id',
+          title: '线下活动标题',
+          date: '活动日期',
+          introduce: '活动介绍',
+          location: '活动位置',
+          imgUrl: '活动图片'
+        },
+        {
+          id: '活动id',
+          title: '线下活动标题',
+          date: '活动日期',
+          introduce: '活动介绍',
+          location: '活动位置',
+          imgUrl: '活动图片'
+        },
+        {
+          id: '活动id',
+          title: '线下活动标题',
+          date: '活动日期',
+          introduce: '活动介绍',
+          location: '活动位置',
+          imgUrl: '活动图片'
+        },
+        {
+          id: '活动id',
+          title: '线下活动标题',
+          date: '活动日期',
+          introduce: '活动介绍',
+          location: '活动位置',
+          imgUrl: '活动图片'
+        },
+        {
+          id: '活动id',
+          title: '线下活动标题',
+          date: '活动日期',
+          introduce: '活动介绍',
+          location: '活动位置',
+          imgUrl: '活动图片'
+        },
+        {
+          id: '活动id',
+          title: '线下活动标题',
+          date: '活动日期',
+          introduce: '活动介绍',
+          location: '活动位置',
+          imgUrl: '活动图片'
+        },
+        {
+          id: '活动id',
+          title: '线下活动标题',
+          date: '活动日期',
+          introduce: '活动介绍',
+          location: '活动位置',
+          imgUrl: '活动图片'
+        },
+        {
+          id: '活动id',
+          title: '线下活动标题',
+          date: '活动日期',
+          introduce: '活动介绍',
+          location: '活动位置',
+          imgUrl: '活动图片'
+        },
+        {
+          id: '活动id',
+          title: '线下活动标题',
+          date: '活动日期',
+          introduce: '活动介绍',
+          location: '活动位置',
+          imgUrl: '活动图片'
+        }
+      ])
     }
   }
 }

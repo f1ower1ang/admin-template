@@ -9,26 +9,28 @@ export default {
       total: 0,
       loading: false,
       fullscreen: false,
-      editIndex: -1
+      editIndex: -1,
+      arrayData: null
     }
   },
   methods: {
+    getArrayData() {
+      this.loading = true
+      this.page = 1
+      this.getItems(this.formData).then(res => {
+        this.arrayData = res
+        this.total = res.length
+        this.tableData = res.slice(0, this.limit)
+        this.loading = false
+      }).catch(e => {
+        this.loading = false
+      })
+    },
     getTableData() {
       this.loading = true
-      const data = {
-        page: this.page,
-        limit: this.limit
-      }
-      Object.assign(data, this.formData)
-      setTimeout(async() => {
-        try {
-          const res = await this.getItems(data)
-          this.tableData = res.data
-          this.total = res.count
-          this.loading = false
-        } catch (e) {
-          this.loading = false
-        }
+      setTimeout(() => {
+        this.tableData = this.arrayData.slice((this.page - 1) * this.limit, this.page * this.limit)
+        this.loading = false
       }, 200)
     },
     changePage(page) {
@@ -40,25 +42,20 @@ export default {
       this.getTableData()
     },
     search() {
-      this.loading = true
-      this.page = 1
-      this.getTableData()
+      this.getArrayData()
     },
     addOrEditItem(itemKey, form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
           if (this.editIndex === -1) {
-            this.addItem(this[itemKey]).then((res) => {
-              this.tableData.unshift(res.data)
-              if (this.tableData.length > this.limit) {
-                this.tableData.pop()
-              }
-              this.total += 1
+            this.addItem().then((res) => {
+              this.getArrayData()
               this.$message.success('添加成功')
             })
           } else {
-            this.editItem(this[itemKey]).then((res) => {
-              Object.assign(this.tableData[this.editIndex], res.data)
+            const editData = Object.assign({}, this[itemKey])
+            this.editItem().then((res) => {
+              Object.assign(this.tableData[this.editIndex], editData)
               this.$message.success('修改成功')
             })
           }
@@ -72,16 +69,16 @@ export default {
       this[itemKey] = origin[itemKey]
     },
     deleteOneItem(item, index) {
-      this.delItem(item.id).then((res) => {
+      this.delItem(item.id).then(() => {
+        this.loading = true
+        this.arrayData.splice((this.page - 1) * this.limit + index, 1)
         this.getTableData()
-        // this.tableData.splice(index, 1)
       })
     },
     deleteMoreItem() {
       if (!this.selection || this.selection.length === 0) return
-      this.delItems(this.selection).then((res) => {
-        this.getTableData()
-        // this.tableData = this.tableData.filter(item => this.selection.indexOf(item.id) === -1)
+      this.delItems(this.selection).then(() => {
+        this.getArrayData()
       })
     },
     handleSelectionChange(val) {

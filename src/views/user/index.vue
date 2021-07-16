@@ -31,9 +31,9 @@
           :data="tableData"
           border
           size="small"
-          @selection-change="handleSelectionChange"
           :header-cell-style="{backgroundColor: '#ebeef5', fontWeight: 500, padding: '6px 0'}"
           :header-row-style="{backgroundColor: '#ebeef5', color: '#000', fontSize: '14px'}"
+          @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column v-for="(label, index) in header" :key="index" :label="label" :prop="key[index]" />
@@ -73,72 +73,69 @@ export default {
     }
   },
   created() {
-    this.getTableData()
+    this.getArrayData()
   },
   methods: {
     getItems(params) {
       // 后端接口请求
-      return Promise.resolve({
-        count: 10,
-        data: [
-          {
-            id: '用户id',
-            username: '用户名',
-            phone: '用户手机',
-            register: '注册时间',
-            lastLogin: '最近登录时间'
-          },
-          {
-            id: '用户id',
-            username: '用户名',
-            phone: '用户手机',
-            register: '注册时间',
-            lastLogin: '最近登录时间'
-          },
-          {
-            id: '用户id',
-            username: '用户名',
-            phone: '用户手机',
-            register: '注册时间',
-            lastLogin: '最近登录时间'
-          },
-          {
-            id: '用户id',
-            username: '用户名',
-            phone: '用户手机',
-            register: '注册时间',
-            lastLogin: '最近登录时间'
-          },
-          {
-            id: '用户id',
-            username: '用户名',
-            phone: '用户手机',
-            register: '注册时间',
-            lastLogin: '最近登录时间'
-          },
-          {
-            id: '用户id',
-            username: '用户名',
-            phone: '用户手机',
-            register: '注册时间',
-            lastLogin: '最近登录时间'
-          },
-          {
-            id: '用户id',
-            username: '用户名',
-            phone: '用户手机',
-            register: '注册时间',
-            lastLogin: '最近登录时间'
-          },
-          {
-            id: '用户id',
-            username: '用户名',
-            phone: '用户手机',
-            register: '注册时间',
-            lastLogin: '最近登录时间'
-          }
-        ]
-      })
+      return Promise.resolve([
+        {
+          id: '用户id',
+          username: '用户名',
+          phone: '用户手机',
+          register: '注册时间',
+          lastLogin: '最近登录时间'
+        },
+        {
+          id: '用户id',
+          username: '用户名',
+          phone: '用户手机',
+          register: '注册时间',
+          lastLogin: '最近登录时间'
+        },
+        {
+          id: '用户id',
+          username: '用户名',
+          phone: '用户手机',
+          register: '注册时间',
+          lastLogin: '最近登录时间'
+        },
+        {
+          id: '用户id',
+          username: '用户名',
+          phone: '用户手机',
+          register: '注册时间',
+          lastLogin: '最近登录时间'
+        },
+        {
+          id: '用户id',
+          username: '用户名',
+          phone: '用户手机',
+          register: '注册时间',
+          lastLogin: '最近登录时间'
+        },
+        {
+          id: '用户id',
+          username: '用户名',
+          phone: '用户手机',
+          register: '注册时间',
+          lastLogin: '最近登录时间'
+        },
+        {
+          id: '用户id',
+          username: '用户名',
+          phone: '用户手机',
+          register: '注册时间',
+          lastLogin: '最近登录时间'
+        },
+        {
+          id: '用户id',
+          username: '用户名',
+          phone: '用户手机',
+          register: '注册时间',
+          lastLogin: '最近登录时间'
+        }
+      ])
     }
   }
 }

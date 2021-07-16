@@ -55,3 +55,21 @@
 span+.el-button {
   margin-left: 10px;
 }
+
+.common-dialog {
+  .el-dialog__header {
+    background-color: $primary;
+    padding: 15px;
+    color: #fff;
+    .el-button {
+      color: #fff !important;
+    }
+    .el-dialog__headerbtn {
+      top: 14px;
+      right: 15px;
+      i {
+        color: #fff;
+      }
+    }
+  }
+}
