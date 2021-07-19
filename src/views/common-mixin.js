@@ -6,11 +6,16 @@ export default {
       tableData: null,
       page: 1,
       limit: 8,
-      total: 0,
       loading: false,
       fullscreen: false,
       editIndex: -1,
-      arrayData: null
+      arrayData: null,
+      dialogTitle: ''
+    }
+  },
+  computed: {
+    total() {
+      return this.arrayData ? this.arrayData.length : 0
     }
   },
   methods: {
@@ -19,7 +24,6 @@ export default {
       this.page = 1
       this.getItems(this.formData).then(res => {
         this.arrayData = res
-        this.total = res.length
         this.tableData = res.slice(0, this.limit)
         this.loading = false
       }).catch(e => {
@@ -45,7 +49,7 @@ export default {
       this.getArrayData()
     },
     addOrEditItem(itemKey, form) {
-      this.$refs[form].validate((valid) => {
+      this.$refs[form].validate(async(valid) => {
         if (valid) {
           if (this.editIndex === -1) {
             this.addItem().then((res) => {
@@ -84,12 +88,13 @@ export default {
     handleSelectionChange(val) {
       this.selection = val.map(item => item.id)
     },
-    showDialog(addTitle, editTitle, itemKey = '', item = null, index = -1) {
+    showDialog(addTitle, editTitle, itemKey = '', item = null, index = -1, callback = null) {
       this.editIndex = index
       if (item) {
         Object.assign(this[itemKey], item)
       }
       this.dialogTitle = index === -1 ? addTitle : editTitle
+      if (callback) { callback(item) }
       this.dialogTableVisible = true
     }
   }

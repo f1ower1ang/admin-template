@@ -38,7 +38,7 @@
         >
           <el-button slot="reference" size="small" type="danger">删除</el-button>
         </el-popconfirm>
-        <el-button size="small" type="primary" @click="showDialog(null)">添加</el-button>
+        <el-button size="small" type="primary" @click="showDialog('添加创业信息', '修改创业信息')">添加</el-button>
       </div>
       <pagination
         :size="limit"
@@ -57,10 +57,20 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="50" align="center" />
-          <el-table-column v-for="(label, index) in header" :key="index" :label="label" :prop="key[index]" />
-          <el-table-column label="操作" width="200" align="center">
+          <el-table-column v-for="(label, index) in header" :key="index" :label="label" :prop="key[index]" show-overflow-tooltip :width="width[index]" align="center" />
+          <el-table-column label="发布日期" width="150" align="center">
+            <template slot-scope="{ row }">
+              <span>{{ row.createTime | parseTime }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="有效期 (天)" width="100" align="center">
+            <template slot-scope="{ row }">
+              <span>{{ row.available }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="150" align="center">
             <template slot-scope="{ row, $index }">
-              <el-button type="primary" size="mini" plain @click="showDialog('添加创业信息', '修改创业信息', 'ruleForm', row, $index)">编辑</el-button>
+              <el-button type="primary" size="mini" plain @click="showDialog('添加创业信息', '修改创业信息', 'startupForm', row, $index)">编辑</el-button>
               <el-popconfirm
                 confirm-button-text="确定"
                 cancel-button-text="取消"
@@ -78,22 +88,64 @@
         </el-table>
       </pagination>
     </div>
+    <el-dialog :visible.sync="dialogTableVisible" :fullscreen="fullscreen" top="100px" width="690px" class="common-dialog" @close="cancel('startupForm')">
+      <div slot="title" style="display: flex; justify-content: space-between; height: 16px; align-items: center">
+        <p>{{ dialogTitle }}</p>
+        <el-button icon="el-icon-full-screen" type="text" style="margin-right: 30px" @click="fullscreen = !fullscreen" />
+      </div>
+      <el-form ref="startupForm" :model="startupForm" label-width="120px" :rules="rules">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="startupForm.title" placeholder="请输入标题" size="small" />
+        </el-form-item>
+        <el-form-item label="详细信息" prop="content">
+          <el-input
+            v-model="startupForm.content"
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 6}"
+            placeholder="请输入内容"
+          />
+        </el-form-item>
+        <el-form-item label="发布日期" prop="createTime">
+          <el-date-picker
+            v-model="startupForm.createTime"
+            type="date"
+            placeholder="请选择发布日期"
+            size="small"
+          />
+        </el-form-item>
+        <el-form-item label="有效期" prop="available">
+          <el-input-number v-model="startupForm.available" controls-position="right" :min="1" size="small" /> 天
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button type="primary" size="small" @click="addOrEditItem('startupForm', 'startupForm')">确 定</el-button>
+        <el-button size="small" @click="cancel('startupForm')">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
 import commonMixin from '../common-mixin'
+import { searchStartup, getStartupList, addOrEditStartup, delStartup } from '@/api/startup'
+import { parseTime } from '@/utils'
 export default {
   name: 'Startup',
+  filters: {
+    parseTime(time) {
+      return parseTime(new Date(time), '{y}-{m}-{d}')
+    }
+  },
   mixins: [commonMixin],
   data() {
     return {
       tableData: null,
       formData: {
         title: '',
-        date: ''
+        date: null
       },
-      header: ['id', '标题', '发布时间', '有效期'],
-      key: ['id', 'title', 'date', 'time'],
+      header: ['id', '标题', '详细信息'],
+      width: ['80', '', ''],
+      key: ['id', 'title', 'content'],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -120,6 +172,18 @@ export default {
             picker.$emit('pick', [start, end])
           }
         }]
+      },
+      startupForm: {
+        title: '',
+        createTime: '',
+        available: 0,
+        content: ''
+      },
+      rules: {
+        title: { required: true, message: '请输入政策法规标题', trigger: 'blur' },
+        content: { required: true, message: '请输入政策法规内容', trigger: 'blur' },
+        createTime: { required: true, message: '请选择活动发布日期', trigger: 'change' },
+        available: { required: true, message: '请选择活动有效天数', trigger: 'change' }
       }
     }
   },
@@ -127,58 +191,26 @@ export default {
     this.getArrayData()
   },
   methods: {
-    getItems(params) {
+    getItems() {
       // 后端接口请求
-      return Promise.resolve([
-        {
-          id: '活动id',
-          title: '创业活动标题',
-          date: '发布日期',
-          time: '活动有效期'
-        },
-        {
-          id: '活动id',
-          title: '创业活动标题',
-          date: '发布日期',
-          time: '活动有效期'
-        },
-        {
-          id: '活动id',
-          title: '创业活动标题',
-          date: '发布日期',
-          time: '活动有效期'
-        },
-        {
-          id: '活动id',
-          title: '创业活动标题',
-          date: '发布日期',
-          time: '活动有效期'
-        },
-        {
-          id: '活动id',
-          title: '创业活动标题',
-          date: '发布日期',
-          time: '活动有效期'
-        },
-        {
-          id: '活动id',
-          title: '创业活动标题',
-          date: '发布日期',
-          time: '活动有效期'
-        },
-        {
-          id: '活动id',
-          title: '创业活动标题',
-          date: '发布日期',
-          time: '活动有效期'
-        },
-        {
-          id: '活动id',
-          title: '创业活动标题',
-          date: '发布日期',
-          time: '活动有效期'
-        }
-      ])
+      const { title, date } = this.formData
+      if (title.length || date) {
+        const startDate = date && parseTime(date[0], '{y}-{m}-{d}') || ''
+        const endDate = date && parseTime(date[1], '{y}-{m}-{d}') || ''
+        const params = Object.assign({}, { title, startDate, endDate })
+        return searchStartup(params)
+      } else {
+        return getStartupList()
+      }
+    },
+    addItem() {
+      return addOrEditStartup(this.startupForm)
+    },
+    editItem() {
+      return addOrEditStartup(this.startupForm)
+    },
+    delItem(id) {
+      return delStartup(id)
     }
   }
 }

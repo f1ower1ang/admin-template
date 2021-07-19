@@ -19,7 +19,6 @@
               label="未解决"
               :value="0"
             />
-            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="发布日期">

@@ -107,7 +107,7 @@
       </el-form>
       <div slot="footer">
         <el-button type="primary" size="small" @click="addOrEditItem('policyForm', 'policyForm')">确 定</el-button>
-        <el-button size="small" @click="cancel('ruleForm')">取 消</el-button>
+        <el-button size="small" @click="cancel('policyForm')">取 消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -142,7 +142,6 @@ export default {
         lawType: { required: true, message: '请选择政策法规类型', trigger: 'blur' },
         content: { required: true, message: '请输入政策法规内容', trigger: 'blur' }
       },
-      dialogTitle: '添加政策法规',
       dict: {},
       formData: {
         lawType: -1
